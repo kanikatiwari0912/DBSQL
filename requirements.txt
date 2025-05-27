@@ -1,0 +1,4 @@
+matplotlib==3.10.3
+pandas==2.2.3
+ply==3.11
+spacy==3.8.5

@@ -1,0 +1,719 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> query
+Rule 1     query -> SELECT select_list FROM IDENTIFIER where_clause group_by_clause plot_clause order_clause limit_clause SEMICOLON
+Rule 2     select_list -> ASTERISK
+Rule 3     select_list -> expression COMMA select_list
+Rule 4     select_list -> expression
+Rule 5     expression -> IDENTIFIER
+Rule 6     expression -> function_call
+Rule 7     expression -> avg_function
+Rule 8     expression -> custom_metric
+Rule 9     function_call -> IDENTIFIER LPAREN arg_list RPAREN
+Rule 10    avg_function -> AVG LPAREN IDENTIFIER RPAREN
+Rule 11    custom_metric -> CUSTOM_METRIC LPAREN IDENTIFIER COMMA arg_list RPAREN
+Rule 12    arg_list -> IDENTIFIER COMMA arg_list
+Rule 13    arg_list -> IDENTIFIER
+Rule 14    where_clause -> WHERE condition
+Rule 15    where_clause -> empty
+Rule 16    condition -> IDENTIFIER GREATER_THAN NUMBER
+Rule 17    condition -> IDENTIFIER LESS_THAN NUMBER
+Rule 18    condition -> IDENTIFIER EQUALS STRING
+Rule 19    group_by_clause -> GROUP BY IDENTIFIER
+Rule 20    group_by_clause -> empty
+Rule 21    order_clause -> ORDER BY IDENTIFIER order_direction
+Rule 22    order_clause -> empty
+Rule 23    order_direction -> ASC
+Rule 24    order_direction -> DESC
+Rule 25    limit_clause -> LIMIT NUMBER
+Rule 26    limit_clause -> empty
+Rule 27    plot_clause -> PLOT BAR GRAPH
+Rule 28    plot_clause -> PLOT LINE GRAPH
+Rule 29    plot_clause -> PLOT PIE CHART
+Rule 30    plot_clause -> empty
+Rule 31    empty -> <empty>
+
+Terminals, with rules where they appear
+
+ASC                  : 23
+ASTERISK             : 2
+AVG                  : 10
+BAR                  : 27
+BY                   : 19 21
+CHART                : 29
+COMMA                : 3 11 12
+CUSTOM_METRIC        : 11
+DESC                 : 24
+EQUALS               : 18
+FROM                 : 1
+GRAPH                : 27 28
+GREATER_THAN         : 16
+GROUP                : 19
+IDENTIFIER           : 1 5 9 10 11 12 13 16 17 18 19 21
+LESS_THAN            : 17
+LIMIT                : 25
+LINE                 : 28
+LPAREN               : 9 10 11
+NUMBER               : 16 17 25
+ORDER                : 21
+PIE                  : 29
+PLOT                 : 27 28 29
+RPAREN               : 9 10 11
+SELECT               : 1
+SEMICOLON            : 1
+STRING               : 18
+WHERE                : 14
+error                : 
+
+Nonterminals, with rules where they appear
+
+arg_list             : 9 11 12
+avg_function         : 7
+condition            : 14
+custom_metric        : 8
+empty                : 15 20 22 26 30
+expression           : 3 4
+function_call        : 6
+group_by_clause      : 1
+limit_clause         : 1
+order_clause         : 1
+order_direction      : 21
+plot_clause          : 1
+query                : 0
+select_list          : 1 3
+where_clause         : 1
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . query
+    (1) query -> . SELECT select_list FROM IDENTIFIER where_clause group_by_clause plot_clause order_clause limit_clause SEMICOLON
+
+    SELECT          shift and go to state 2
+
+    query                          shift and go to state 1
+
+state 1
+
+    (0) S' -> query .
+
+
+
+state 2
+
+    (1) query -> SELECT . select_list FROM IDENTIFIER where_clause group_by_clause plot_clause order_clause limit_clause SEMICOLON
+    (2) select_list -> . ASTERISK
+    (3) select_list -> . expression COMMA select_list
+    (4) select_list -> . expression
+    (5) expression -> . IDENTIFIER
+    (6) expression -> . function_call
+    (7) expression -> . avg_function
+    (8) expression -> . custom_metric
+    (9) function_call -> . IDENTIFIER LPAREN arg_list RPAREN
+    (10) avg_function -> . AVG LPAREN IDENTIFIER RPAREN
+    (11) custom_metric -> . CUSTOM_METRIC LPAREN IDENTIFIER COMMA arg_list RPAREN
+
+    ASTERISK        shift and go to state 5
+    IDENTIFIER      shift and go to state 4
+    AVG             shift and go to state 10
+    CUSTOM_METRIC   shift and go to state 11
+
+    select_list                    shift and go to state 3
+    expression                     shift and go to state 6
+    function_call                  shift and go to state 7
+    avg_function                   shift and go to state 8
+    custom_metric                  shift and go to state 9
+
+state 3
+
+    (1) query -> SELECT select_list . FROM IDENTIFIER where_clause group_by_clause plot_clause order_clause limit_clause SEMICOLON
+
+    FROM            shift and go to state 12
+
+
+state 4
+
+    (5) expression -> IDENTIFIER .
+    (9) function_call -> IDENTIFIER . LPAREN arg_list RPAREN
+
+    COMMA           reduce using rule 5 (expression -> IDENTIFIER .)
+    FROM            reduce using rule 5 (expression -> IDENTIFIER .)
+    LPAREN          shift and go to state 13
+
+
+state 5
+
+    (2) select_list -> ASTERISK .
+
+    FROM            reduce using rule 2 (select_list -> ASTERISK .)
+
+
+state 6
+
+    (3) select_list -> expression . COMMA select_list
+    (4) select_list -> expression .
+
+    COMMA           shift and go to state 14
+    FROM            reduce using rule 4 (select_list -> expression .)
+
+
+state 7
+
+    (6) expression -> function_call .
+
+    COMMA           reduce using rule 6 (expression -> function_call .)
+    FROM            reduce using rule 6 (expression -> function_call .)
+
+
+state 8
+
+    (7) expression -> avg_function .
+
+    COMMA           reduce using rule 7 (expression -> avg_function .)
+    FROM            reduce using rule 7 (expression -> avg_function .)
+
+
+state 9
+
+    (8) expression -> custom_metric .
+
+    COMMA           reduce using rule 8 (expression -> custom_metric .)
+    FROM            reduce using rule 8 (expression -> custom_metric .)
+
+
+state 10
+
+    (10) avg_function -> AVG . LPAREN IDENTIFIER RPAREN
+
+    LPAREN          shift and go to state 15
+
+
+state 11
+
+    (11) custom_metric -> CUSTOM_METRIC . LPAREN IDENTIFIER COMMA arg_list RPAREN
+
+    LPAREN          shift and go to state 16
+
+
+state 12
+
+    (1) query -> SELECT select_list FROM . IDENTIFIER where_clause group_by_clause plot_clause order_clause limit_clause SEMICOLON
+
+    IDENTIFIER      shift and go to state 17
+
+
+state 13
+
+    (9) function_call -> IDENTIFIER LPAREN . arg_list RPAREN
+    (12) arg_list -> . IDENTIFIER COMMA arg_list
+    (13) arg_list -> . IDENTIFIER
+
+    IDENTIFIER      shift and go to state 18
+
+    arg_list                       shift and go to state 19
+
+state 14
+
+    (3) select_list -> expression COMMA . select_list
+    (2) select_list -> . ASTERISK
+    (3) select_list -> . expression COMMA select_list
+    (4) select_list -> . expression
+    (5) expression -> . IDENTIFIER
+    (6) expression -> . function_call
+    (7) expression -> . avg_function
+    (8) expression -> . custom_metric
+    (9) function_call -> . IDENTIFIER LPAREN arg_list RPAREN
+    (10) avg_function -> . AVG LPAREN IDENTIFIER RPAREN
+    (11) custom_metric -> . CUSTOM_METRIC LPAREN IDENTIFIER COMMA arg_list RPAREN
+
+    ASTERISK        shift and go to state 5
+    IDENTIFIER      shift and go to state 4
+    AVG             shift and go to state 10
+    CUSTOM_METRIC   shift and go to state 11
+
+    expression                     shift and go to state 6
+    select_list                    shift and go to state 20
+    function_call                  shift and go to state 7
+    avg_function                   shift and go to state 8
+    custom_metric                  shift and go to state 9
+
+state 15
+
+    (10) avg_function -> AVG LPAREN . IDENTIFIER RPAREN
+
+    IDENTIFIER      shift and go to state 21
+
+
+state 16
+
+    (11) custom_metric -> CUSTOM_METRIC LPAREN . IDENTIFIER COMMA arg_list RPAREN
+
+    IDENTIFIER      shift and go to state 22
+
+
+state 17
+
+    (1) query -> SELECT select_list FROM IDENTIFIER . where_clause group_by_clause plot_clause order_clause limit_clause SEMICOLON
+    (14) where_clause -> . WHERE condition
+    (15) where_clause -> . empty
+    (31) empty -> .
+
+    WHERE           shift and go to state 24
+    GROUP           reduce using rule 31 (empty -> .)
+    PLOT            reduce using rule 31 (empty -> .)
+    ORDER           reduce using rule 31 (empty -> .)
+    LIMIT           reduce using rule 31 (empty -> .)
+    SEMICOLON       reduce using rule 31 (empty -> .)
+
+    where_clause                   shift and go to state 23
+    empty                          shift and go to state 25
+
+state 18
+
+    (12) arg_list -> IDENTIFIER . COMMA arg_list
+    (13) arg_list -> IDENTIFIER .
+
+    COMMA           shift and go to state 26
+    RPAREN          reduce using rule 13 (arg_list -> IDENTIFIER .)
+
+
+state 19
+
+    (9) function_call -> IDENTIFIER LPAREN arg_list . RPAREN
+
+    RPAREN          shift and go to state 27
+
+
+state 20
+
+    (3) select_list -> expression COMMA select_list .
+
+    FROM            reduce using rule 3 (select_list -> expression COMMA select_list .)
+
+
+state 21
+
+    (10) avg_function -> AVG LPAREN IDENTIFIER . RPAREN
+
+    RPAREN          shift and go to state 28
+
+
+state 22
+
+    (11) custom_metric -> CUSTOM_METRIC LPAREN IDENTIFIER . COMMA arg_list RPAREN
+
+    COMMA           shift and go to state 29
+
+
+state 23
+
+    (1) query -> SELECT select_list FROM IDENTIFIER where_clause . group_by_clause plot_clause order_clause limit_clause SEMICOLON
+    (19) group_by_clause -> . GROUP BY IDENTIFIER
+    (20) group_by_clause -> . empty
+    (31) empty -> .
+
+    GROUP           shift and go to state 31
+    PLOT            reduce using rule 31 (empty -> .)
+    ORDER           reduce using rule 31 (empty -> .)
+    LIMIT           reduce using rule 31 (empty -> .)
+    SEMICOLON       reduce using rule 31 (empty -> .)
+
+    group_by_clause                shift and go to state 30
+    empty                          shift and go to state 32
+
+state 24
+
+    (14) where_clause -> WHERE . condition
+    (16) condition -> . IDENTIFIER GREATER_THAN NUMBER
+    (17) condition -> . IDENTIFIER LESS_THAN NUMBER
+    (18) condition -> . IDENTIFIER EQUALS STRING
+
+    IDENTIFIER      shift and go to state 34
+
+    condition                      shift and go to state 33
+
+state 25
+
+    (15) where_clause -> empty .
+
+    GROUP           reduce using rule 15 (where_clause -> empty .)
+    PLOT            reduce using rule 15 (where_clause -> empty .)
+    ORDER           reduce using rule 15 (where_clause -> empty .)
+    LIMIT           reduce using rule 15 (where_clause -> empty .)
+    SEMICOLON       reduce using rule 15 (where_clause -> empty .)
+
+
+state 26
+
+    (12) arg_list -> IDENTIFIER COMMA . arg_list
+    (12) arg_list -> . IDENTIFIER COMMA arg_list
+    (13) arg_list -> . IDENTIFIER
+
+    IDENTIFIER      shift and go to state 18
+
+    arg_list                       shift and go to state 35
+
+state 27
+
+    (9) function_call -> IDENTIFIER LPAREN arg_list RPAREN .
+
+    COMMA           reduce using rule 9 (function_call -> IDENTIFIER LPAREN arg_list RPAREN .)
+    FROM            reduce using rule 9 (function_call -> IDENTIFIER LPAREN arg_list RPAREN .)
+
+
+state 28
+
+    (10) avg_function -> AVG LPAREN IDENTIFIER RPAREN .
+
+    COMMA           reduce using rule 10 (avg_function -> AVG LPAREN IDENTIFIER RPAREN .)
+    FROM            reduce using rule 10 (avg_function -> AVG LPAREN IDENTIFIER RPAREN .)
+
+
+state 29
+
+    (11) custom_metric -> CUSTOM_METRIC LPAREN IDENTIFIER COMMA . arg_list RPAREN
+    (12) arg_list -> . IDENTIFIER COMMA arg_list
+    (13) arg_list -> . IDENTIFIER
+
+    IDENTIFIER      shift and go to state 18
+
+    arg_list                       shift and go to state 36
+
+state 30
+
+    (1) query -> SELECT select_list FROM IDENTIFIER where_clause group_by_clause . plot_clause order_clause limit_clause SEMICOLON
+    (27) plot_clause -> . PLOT BAR GRAPH
+    (28) plot_clause -> . PLOT LINE GRAPH
+    (29) plot_clause -> . PLOT PIE CHART
+    (30) plot_clause -> . empty
+    (31) empty -> .
+
+    PLOT            shift and go to state 38
+    ORDER           reduce using rule 31 (empty -> .)
+    LIMIT           reduce using rule 31 (empty -> .)
+    SEMICOLON       reduce using rule 31 (empty -> .)
+
+    plot_clause                    shift and go to state 37
+    empty                          shift and go to state 39
+
+state 31
+
+    (19) group_by_clause -> GROUP . BY IDENTIFIER
+
+    BY              shift and go to state 40
+
+
+state 32
+
+    (20) group_by_clause -> empty .
+
+    PLOT            reduce using rule 20 (group_by_clause -> empty .)
+    ORDER           reduce using rule 20 (group_by_clause -> empty .)
+    LIMIT           reduce using rule 20 (group_by_clause -> empty .)
+    SEMICOLON       reduce using rule 20 (group_by_clause -> empty .)
+
+
+state 33
+
+    (14) where_clause -> WHERE condition .
+
+    GROUP           reduce using rule 14 (where_clause -> WHERE condition .)
+    PLOT            reduce using rule 14 (where_clause -> WHERE condition .)
+    ORDER           reduce using rule 14 (where_clause -> WHERE condition .)
+    LIMIT           reduce using rule 14 (where_clause -> WHERE condition .)
+    SEMICOLON       reduce using rule 14 (where_clause -> WHERE condition .)
+
+
+state 34
+
+    (16) condition -> IDENTIFIER . GREATER_THAN NUMBER
+    (17) condition -> IDENTIFIER . LESS_THAN NUMBER
+    (18) condition -> IDENTIFIER . EQUALS STRING
+
+    GREATER_THAN    shift and go to state 41
+    LESS_THAN       shift and go to state 42
+    EQUALS          shift and go to state 43
+
+
+state 35
+
+    (12) arg_list -> IDENTIFIER COMMA arg_list .
+
+    RPAREN          reduce using rule 12 (arg_list -> IDENTIFIER COMMA arg_list .)
+
+
+state 36
+
+    (11) custom_metric -> CUSTOM_METRIC LPAREN IDENTIFIER COMMA arg_list . RPAREN
+
+    RPAREN          shift and go to state 44
+
+
+state 37
+
+    (1) query -> SELECT select_list FROM IDENTIFIER where_clause group_by_clause plot_clause . order_clause limit_clause SEMICOLON
+    (21) order_clause -> . ORDER BY IDENTIFIER order_direction
+    (22) order_clause -> . empty
+    (31) empty -> .
+
+    ORDER           shift and go to state 46
+    LIMIT           reduce using rule 31 (empty -> .)
+    SEMICOLON       reduce using rule 31 (empty -> .)
+
+    order_clause                   shift and go to state 45
+    empty                          shift and go to state 47
+
+state 38
+
+    (27) plot_clause -> PLOT . BAR GRAPH
+    (28) plot_clause -> PLOT . LINE GRAPH
+    (29) plot_clause -> PLOT . PIE CHART
+
+    BAR             shift and go to state 48
+    LINE            shift and go to state 49
+    PIE             shift and go to state 50
+
+
+state 39
+
+    (30) plot_clause -> empty .
+
+    ORDER           reduce using rule 30 (plot_clause -> empty .)
+    LIMIT           reduce using rule 30 (plot_clause -> empty .)
+    SEMICOLON       reduce using rule 30 (plot_clause -> empty .)
+
+
+state 40
+
+    (19) group_by_clause -> GROUP BY . IDENTIFIER
+
+    IDENTIFIER      shift and go to state 51
+
+
+state 41
+
+    (16) condition -> IDENTIFIER GREATER_THAN . NUMBER
+
+    NUMBER          shift and go to state 52
+
+
+state 42
+
+    (17) condition -> IDENTIFIER LESS_THAN . NUMBER
+
+    NUMBER          shift and go to state 53
+
+
+state 43
+
+    (18) condition -> IDENTIFIER EQUALS . STRING
+
+    STRING          shift and go to state 54
+
+
+state 44
+
+    (11) custom_metric -> CUSTOM_METRIC LPAREN IDENTIFIER COMMA arg_list RPAREN .
+
+    COMMA           reduce using rule 11 (custom_metric -> CUSTOM_METRIC LPAREN IDENTIFIER COMMA arg_list RPAREN .)
+    FROM            reduce using rule 11 (custom_metric -> CUSTOM_METRIC LPAREN IDENTIFIER COMMA arg_list RPAREN .)
+
+
+state 45
+
+    (1) query -> SELECT select_list FROM IDENTIFIER where_clause group_by_clause plot_clause order_clause . limit_clause SEMICOLON
+    (25) limit_clause -> . LIMIT NUMBER
+    (26) limit_clause -> . empty
+    (31) empty -> .
+
+    LIMIT           shift and go to state 56
+    SEMICOLON       reduce using rule 31 (empty -> .)
+
+    limit_clause                   shift and go to state 55
+    empty                          shift and go to state 57
+
+state 46
+
+    (21) order_clause -> ORDER . BY IDENTIFIER order_direction
+
+    BY              shift and go to state 58
+
+
+state 47
+
+    (22) order_clause -> empty .
+
+    LIMIT           reduce using rule 22 (order_clause -> empty .)
+    SEMICOLON       reduce using rule 22 (order_clause -> empty .)
+
+
+state 48
+
+    (27) plot_clause -> PLOT BAR . GRAPH
+
+    GRAPH           shift and go to state 59
+
+
+state 49
+
+    (28) plot_clause -> PLOT LINE . GRAPH
+
+    GRAPH           shift and go to state 60
+
+
+state 50
+
+    (29) plot_clause -> PLOT PIE . CHART
+
+    CHART           shift and go to state 61
+
+
+state 51
+
+    (19) group_by_clause -> GROUP BY IDENTIFIER .
+
+    PLOT            reduce using rule 19 (group_by_clause -> GROUP BY IDENTIFIER .)
+    ORDER           reduce using rule 19 (group_by_clause -> GROUP BY IDENTIFIER .)
+    LIMIT           reduce using rule 19 (group_by_clause -> GROUP BY IDENTIFIER .)
+    SEMICOLON       reduce using rule 19 (group_by_clause -> GROUP BY IDENTIFIER .)
+
+
+state 52
+
+    (16) condition -> IDENTIFIER GREATER_THAN NUMBER .
+
+    GROUP           reduce using rule 16 (condition -> IDENTIFIER GREATER_THAN NUMBER .)
+    PLOT            reduce using rule 16 (condition -> IDENTIFIER GREATER_THAN NUMBER .)
+    ORDER           reduce using rule 16 (condition -> IDENTIFIER GREATER_THAN NUMBER .)
+    LIMIT           reduce using rule 16 (condition -> IDENTIFIER GREATER_THAN NUMBER .)
+    SEMICOLON       reduce using rule 16 (condition -> IDENTIFIER GREATER_THAN NUMBER .)
+
+
+state 53
+
+    (17) condition -> IDENTIFIER LESS_THAN NUMBER .
+
+    GROUP           reduce using rule 17 (condition -> IDENTIFIER LESS_THAN NUMBER .)
+    PLOT            reduce using rule 17 (condition -> IDENTIFIER LESS_THAN NUMBER .)
+    ORDER           reduce using rule 17 (condition -> IDENTIFIER LESS_THAN NUMBER .)
+    LIMIT           reduce using rule 17 (condition -> IDENTIFIER LESS_THAN NUMBER .)
+    SEMICOLON       reduce using rule 17 (condition -> IDENTIFIER LESS_THAN NUMBER .)
+
+
+state 54
+
+    (18) condition -> IDENTIFIER EQUALS STRING .
+
+    GROUP           reduce using rule 18 (condition -> IDENTIFIER EQUALS STRING .)
+    PLOT            reduce using rule 18 (condition -> IDENTIFIER EQUALS STRING .)
+    ORDER           reduce using rule 18 (condition -> IDENTIFIER EQUALS STRING .)
+    LIMIT           reduce using rule 18 (condition -> IDENTIFIER EQUALS STRING .)
+    SEMICOLON       reduce using rule 18 (condition -> IDENTIFIER EQUALS STRING .)
+
+
+state 55
+
+    (1) query -> SELECT select_list FROM IDENTIFIER where_clause group_by_clause plot_clause order_clause limit_clause . SEMICOLON
+
+    SEMICOLON       shift and go to state 62
+
+
+state 56
+
+    (25) limit_clause -> LIMIT . NUMBER
+
+    NUMBER          shift and go to state 63
+
+
+state 57
+
+    (26) limit_clause -> empty .
+
+    SEMICOLON       reduce using rule 26 (limit_clause -> empty .)
+
+
+state 58
+
+    (21) order_clause -> ORDER BY . IDENTIFIER order_direction
+
+    IDENTIFIER      shift and go to state 64
+
+
+state 59
+
+    (27) plot_clause -> PLOT BAR GRAPH .
+
+    ORDER           reduce using rule 27 (plot_clause -> PLOT BAR GRAPH .)
+    LIMIT           reduce using rule 27 (plot_clause -> PLOT BAR GRAPH .)
+    SEMICOLON       reduce using rule 27 (plot_clause -> PLOT BAR GRAPH .)
+
+
+state 60
+
+    (28) plot_clause -> PLOT LINE GRAPH .
+
+    ORDER           reduce using rule 28 (plot_clause -> PLOT LINE GRAPH .)
+    LIMIT           reduce using rule 28 (plot_clause -> PLOT LINE GRAPH .)
+    SEMICOLON       reduce using rule 28 (plot_clause -> PLOT LINE GRAPH .)
+
+
+state 61
+
+    (29) plot_clause -> PLOT PIE CHART .
+
+    ORDER           reduce using rule 29 (plot_clause -> PLOT PIE CHART .)
+    LIMIT           reduce using rule 29 (plot_clause -> PLOT PIE CHART .)
+    SEMICOLON       reduce using rule 29 (plot_clause -> PLOT PIE CHART .)
+
+
+state 62
+
+    (1) query -> SELECT select_list FROM IDENTIFIER where_clause group_by_clause plot_clause order_clause limit_clause SEMICOLON .
+
+    $end            reduce using rule 1 (query -> SELECT select_list FROM IDENTIFIER where_clause group_by_clause plot_clause order_clause limit_clause SEMICOLON .)
+
+
+state 63
+
+    (25) limit_clause -> LIMIT NUMBER .
+
+    SEMICOLON       reduce using rule 25 (limit_clause -> LIMIT NUMBER .)
+
+
+state 64
+
+    (21) order_clause -> ORDER BY IDENTIFIER . order_direction
+    (23) order_direction -> . ASC
+    (24) order_direction -> . DESC
+
+    ASC             shift and go to state 66
+    DESC            shift and go to state 67
+
+    order_direction                shift and go to state 65
+
+state 65
+
+    (21) order_clause -> ORDER BY IDENTIFIER order_direction .
+
+    LIMIT           reduce using rule 21 (order_clause -> ORDER BY IDENTIFIER order_direction .)
+    SEMICOLON       reduce using rule 21 (order_clause -> ORDER BY IDENTIFIER order_direction .)
+
+
+state 66
+
+    (23) order_direction -> ASC .
+
+    LIMIT           reduce using rule 23 (order_direction -> ASC .)
+    SEMICOLON       reduce using rule 23 (order_direction -> ASC .)
+
+
+state 67
+
+    (24) order_direction -> DESC .
+
+    LIMIT           reduce using rule 24 (order_direction -> DESC .)
+    SEMICOLON       reduce using rule 24 (order_direction -> DESC .)
+
